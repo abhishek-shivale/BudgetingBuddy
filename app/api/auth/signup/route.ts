@@ -8,7 +8,20 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { email } = body as { email: string };
 
-    if (email) {
+    if (!email) {
+      return NextResponse.json(
+        { message: "email is required" },
+        { status: 400 }
+      );
+    }
+
+    const already = await Prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (already) {
       return NextResponse.json(
         { message: "Your email is already registred" },
         { status: 400 }

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!already) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ message: "User not found" }, { status: 400 });
     }
     const magicLink = await getEmailToken(already.email);
     //send this magic Link

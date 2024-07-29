@@ -33,7 +33,17 @@ export async function POST(req: NextRequest) {
     const refreshToken = getRefreshToken(email);
     const accessToken = getAccessToken(email);
 
-    const user = await Prisma.user.update({
+    const exists = await Prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!exists) {
+      return NextResponse.json({ message: "User Not Found" }, { status: 404 });
+    }
+
+    await Prisma.user.update({
       where: {
         email: email,
       },
@@ -46,10 +56,11 @@ export async function POST(req: NextRequest) {
       { message: "Verified Successfully!!", data: accessToken },
       { status: 200 }
     );
-    return response.cookies.set("refreshToken", refreshToken, {
+    response.cookies.set("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
     });
+    return response;
   } catch (error) {
     return NextResponse.json(
       { message: "Something Went Wrong" },
