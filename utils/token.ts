@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const getToken = (email: string, secret: string, time: string) => {
-  return jwt.sign(email, secret, {
+  return jwt.sign({email:email}, secret, {
     expiresIn: time,
     algorithm: "HS256",
   });
@@ -16,7 +16,7 @@ export const decodeToken = (token: string) => {
 };
 
 export const getRefreshToken = (email: string) => {
-  return getToken(email, process.env?.REFRESH_TOKEN as string, "15day");
+  return getToken(email, process.env?.REFRESH_TOKEN as string, "15d");
 };
 
 export const getAccessToken = (email: string) => {

@@ -4,7 +4,7 @@ import {
   getAccessToken,
   getRefreshToken,
   verifyEmailToken,
-} from "@/utils/Token";
+} from "@/utils/token";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

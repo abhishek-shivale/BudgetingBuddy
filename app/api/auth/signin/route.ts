@@ -1,10 +1,10 @@
 import { Prisma } from "@/database/Prisma";
-import { getEmailToken } from "@/utils/Token";
+import { sendMail } from "@/utils/sendEmail";
+import { getEmailToken } from "@/utils/token";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    console.log(req);
     const body = await req.json();
     const { email } = body as { email: string };
 
@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     }
     const magicLink = await getEmailToken(already.email);
     //send this magic Link
+    await sendMail("abhishekshivale21@gmail.com", "signin", magicLink)
 
     return NextResponse.json(
       { message: "Magic Link Sent Successfully!!" },
