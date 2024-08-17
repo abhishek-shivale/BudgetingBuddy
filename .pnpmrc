@@ -1,0 +1,4 @@
+registry=https://registry.npmjs.org/
+store-dir=./pnpm-store
+workspaces=true
+max-concurrency=4

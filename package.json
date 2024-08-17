@@ -10,8 +10,7 @@
     "lint:fix": "next lint --fix",
     "lint:strict": "next lint .",
     "prettier": "prettier --write './**/*.{js,jsx,json,ts,tsx,scss,css,md}'",
-   "prepare": "husky",
-  "lint:commit": "npx commitlint --edit"
+    "prepare": "husky"
   },
   "dependencies": {
     "@prisma/client": "5.18.0",
@@ -36,8 +35,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.4.0",
-    "@commitlint/config-conventional": "^19.2.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
