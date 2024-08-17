@@ -34,9 +34,10 @@ export async function POST(req: NextRequest) {
       data: {
         email: email,
         password: hashedPassword,
-      },
+        isVerified: false,
+      }
     });
-    
+
     const accessToken = getAccessToken(newUser.email);
     const refreshToken = getRefreshToken(newUser.email);
 

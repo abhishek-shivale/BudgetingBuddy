@@ -13,7 +13,7 @@ model User {
   email         String          @unique
   refreshToken  String?
   password      String?
-  isVerified    Boolean
+  isVerified    Boolean?         @default(false)
   currency      String          @default("INR")
   // expenses      expenses[]
   // income        income[]
