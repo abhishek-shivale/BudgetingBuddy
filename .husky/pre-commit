@@ -1,1 +1,2 @@
-pnpm run
+pnpm lint
+pnpm lint:fix
