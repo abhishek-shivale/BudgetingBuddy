@@ -1,7 +1,7 @@
-import { Prisma } from "@/database/Prisma";
-import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import { getAccessToken, getRefreshToken } from "@/utils/token";
+import { Prisma } from '@/database/Prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
+import { getAccessToken, getRefreshToken } from '@/utils/token';
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,21 +10,21 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { message: "Email and Password are required" },
-        { status: 400 }
+        { message: 'Email and Password are required' },
+        { status: 400 },
       );
     }
 
     const already = await Prisma.user.findFirst({
       where: {
-        email: email,
+        email,
       },
     });
 
     if (already) {
       return NextResponse.json(
-        { message: "User already exists" },
-        { status: 400 }
+        { message: 'User already exists' },
+        { status: 400 },
       );
     }
 
@@ -32,10 +32,10 @@ export async function POST(req: NextRequest) {
 
     const newUser = await Prisma.user.create({
       data: {
-        email: email,
+        email,
         password: hashedPassword,
         isVerified: false,
-      }
+      },
     });
 
     const accessToken = getAccessToken(newUser.email);
@@ -43,31 +43,31 @@ export async function POST(req: NextRequest) {
 
     await Prisma.user.update({
       where: {
-        email: email,
+        email,
       },
       data: {
-        refreshToken: refreshToken,
+        refreshToken,
       },
     });
 
     const response = NextResponse.json(
-      { message: "User created successfully" },
-      { status: 200 }
+      { message: 'User created successfully' },
+      { status: 200 },
     );
 
-    response.cookies.set("accessToken", accessToken, {
+    response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
       maxAge: 60 * 60, // 1 hour
     });
 
-    response.cookies.set("refreshToken", refreshToken, {
+    response.cookies.set('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
       maxAge: 60 * 60 * 24 * 7, // 1 week
     });
 
@@ -76,8 +76,8 @@ export async function POST(req: NextRequest) {
     console.log(error);
 
     return NextResponse.json(
-      { message: "Something went wrong" },
-      { status: 500 }
+      { message: 'Something went wrong' },
+      { status: 500 },
     );
   }
 }

@@ -1,7 +1,7 @@
-import { Prisma } from "@/database/Prisma";
-import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import { getAccessToken, getRefreshToken } from "@/utils/token";
+import { Prisma } from '@/database/Prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
+import { getAccessToken, getRefreshToken } from '@/utils/token';
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,25 +10,31 @@ export async function POST(req: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { message: "Email and Password are required" },
-        { status: 400 }
+        { message: 'Email and Password are required' },
+        { status: 400 },
       );
     }
 
     const already = await Prisma.user.findFirst({
       where: {
-        email: email,
+        email,
       },
     });
 
     if (!already) {
-      return NextResponse.json({ message: "User does not exist" }, { status: 400 });
+      return NextResponse.json(
+        { message: 'User does not exist' },
+        { status: 400 },
+      );
     }
 
     const match = await bcrypt.compare(password, already.password as string);
 
     if (!match) {
-      return NextResponse.json({ message: "Invalid Credentials" }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Invalid Credentials' },
+        { status: 400 },
+      );
     }
 
     const accessToken = getAccessToken(email);
@@ -36,18 +42,18 @@ export async function POST(req: NextRequest) {
 
     await Prisma.user.update({
       where: {
-        email: email,
+        email,
       },
       data: {
-        refreshToken: refreshToken,
+        refreshToken,
       },
     });
 
     const response = NextResponse.json(
-      { message: "Login successful" },
-      { status: 200 }
+      { message: 'Login successful' },
+      { status: 200 },
     );
-    
+
     response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -65,11 +71,12 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
+      { message: 'Internal Server Error' },
+      { status: 500 },
     );
   }
 }

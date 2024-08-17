@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export const getToken = (email: string, secret: string, time: string) => {
-  return jwt.sign({email:email}, secret, {
+  return jwt.sign({ email: email as string }, secret, {
     expiresIn: time,
-    algorithm: "HS256",
+    algorithm: 'HS256',
   });
 };
 
@@ -16,11 +16,11 @@ export const decodeToken = (token: string) => {
 };
 
 export const getRefreshToken = (email: string) => {
-  return getToken(email, process.env?.REFRESH_TOKEN as string, "1w");
+  return getToken(email, process.env?.REFRESH_TOKEN as string, '1w');
 };
 
 export const getAccessToken = (email: string) => {
-  return getToken(email, process.env?.ACCESS_TOKEN as string, "1h");
+  return getToken(email, process.env?.ACCESS_TOKEN as string, '1h');
 };
 
 export const verifyRefreshToken = (token: string) => {
@@ -32,7 +32,7 @@ export const verifyAccessToken = (token: string) => {
 };
 
 export const getEmailToken = async (email: string) => {
-  return getToken(email, process.env?.EMAIL_TOKEN as string, "10m");
+  return getToken(email, process.env?.EMAIL_TOKEN as string, '10m');
 };
 
 export const verifyEmailToken = async (token: string) => {

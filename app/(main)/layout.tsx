@@ -1,20 +1,19 @@
-import React from 'react'
-import Sidebar from '@/components/sidebar'
-import Navbar from '@/components/navbar'
+import React from 'react';
+import Sidebar from '@/components/sidebar';
+import Navbar from '@/components/navbar';
 
-
-type Props = { children: React.ReactNode }
+type Props = { children: React.ReactNode };
 
 const Layout = (props: Props) => {
   return (
-    <div className="flex overflow-hidden h-screen">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="w-full">
-        <Navbar/>
+        <Navbar />
         {props.children}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

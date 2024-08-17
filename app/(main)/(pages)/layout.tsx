@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-type Props = { children: React.ReactNode }
+type Props = { children: React.ReactNode };
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="border-l-[1px] border-t-[1px] pb-20 h-screen  border-muted-foreground/20">
+    <div className="h-screen border-l-[1px] border-t-[1px] border-muted-foreground/20 pb-20">
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

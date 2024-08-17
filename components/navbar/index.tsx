@@ -1,23 +1,24 @@
-"use client";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Help from "@/components/icons/Help";
-import { useTheme } from "next-themes";
+/* eslint-disable react-hooks/rules-of-hooks */
+'use client';
+import { usePathname } from 'next/navigation';
+import React from 'react';
+import Help from '@/components/icons/Help';
+import { useTheme } from 'next-themes';
 
 function index() {
   const { theme } = useTheme();
   const pathName = usePathname();
 
-  const color = theme == String("dark") ? "black" : "white";
+  const color = theme == String('dark') ? 'black' : 'white';
   return (
-    <div className="flex flex-row justify-between gap-6 items-center px-4 py-4 w-full ">
+    <div className="flex w-full flex-row items-center justify-between gap-6 px-4 py-4">
       <h2 className="text-2xl font-extrabold text-black dark:text-white">
-        {pathName.replace("/", "").charAt(0).toUpperCase() +
-          pathName.replace("/", "").slice(1)}
+        {pathName.replace('/', '').charAt(0).toUpperCase() +
+          pathName.replace('/', '').slice(1)}
       </h2>
-      <span className="flex items-center justify-center gap-2 rounded-lg bg-gray-900 hover:bg-gray-700 h-8 px-3 dark:bg-white cursor-pointer">
+      <span className="flex h-8 cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray-900 px-3 hover:bg-gray-700 dark:bg-white">
         <Help color={color} className={`h-4 w-4`} />
-        <div className="bg-transparent hover:bg-transparent p-0 text-white dark:text-black text-sm font-normal">
+        <div className="bg-transparent p-0 text-sm font-normal text-white hover:bg-transparent dark:text-black">
           Help
         </div>
       </span>
