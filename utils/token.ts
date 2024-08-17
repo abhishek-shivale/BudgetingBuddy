@@ -16,11 +16,11 @@ export const decodeToken = (token: string) => {
 };
 
 export const getRefreshToken = (email: string) => {
-  return getToken(email, process.env?.REFRESH_TOKEN as string, "15d");
+  return getToken(email, process.env?.REFRESH_TOKEN as string, "1w");
 };
 
 export const getAccessToken = (email: string) => {
-  return getToken(email, process.env?.ACCESS_TOKEN as string, "15m");
+  return getToken(email, process.env?.ACCESS_TOKEN as string, "1h");
 };
 
 export const verifyRefreshToken = (token: string) => {

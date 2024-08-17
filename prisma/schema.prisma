@@ -8,9 +8,39 @@ datasource db {
 }
 
 model User {
-  id String @id @unique @default(uuid())
-  name String? 
-  email String @unique
-  refreshToken String?
+  id            String          @id @unique @default(uuid())
+  name          String?
+  email         String          @unique
+  refreshToken  String?
+  password      String?
+  isVerified    Boolean
+  currency      String          @default("INR")
+  // expenses      expenses[]
+  // income        income[]
+  // investments   investments[]
+  // subscriptions subscriptions[]
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
 }
 
+model expenses {
+id String @id @default(uuid())    
+user_id String @db.Uuid
+
+//user User @relation(fields: [user_id] references: [id] onDelete: Cascade)
+
+}
+
+model income {
+id String @id @default(uuid())    
+
+}
+
+model investments {
+id String @id @default(uuid())    
+
+}
+model subscriptions {
+id String @id @default(uuid())    
+
+}
