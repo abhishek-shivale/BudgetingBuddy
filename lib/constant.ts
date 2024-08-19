@@ -5,7 +5,6 @@ import Investments from '@/components/icons/Investments';
 import Payment from '@/components/icons/Payment';
 import Bot from '@/components/icons/Ai';
 
-
 export const menuOptions = [
   { name: 'Dashboard', Component: Home, href: '/dashboard' },
   { name: 'Income', Component: Income, href: '/income' },
@@ -13,5 +12,4 @@ export const menuOptions = [
   { name: 'Expenses', Component: Expenses, href: '/expenses' },
   { name: 'Subscriptions', Component: Payment, href: '/subscriptions' },
   { name: 'Ai', Component: Bot, href: '/ai' },
-
 ];

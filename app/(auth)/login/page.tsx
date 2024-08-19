@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import Form from './form';
 
 function page() {
-  console.log(cookies().get('accessToken'))
+  console.log(cookies().get('accessToken'));
   return (
     <main className="relative m-auto flex h-[100vh] w-full flex-col items-center justify-center">
       <div className="absolute inset-x-0 top-[5px] z-10 h-96 overflow-hidden text-gray-900/40 opacity-10 [mask-image:linear-gradient(to_top,transparent,white)]">

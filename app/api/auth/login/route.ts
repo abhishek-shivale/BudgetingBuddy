@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     const already = await Prisma.user.findFirst({
       where: {
-        email
+        email,
       },
     });
 
@@ -48,9 +48,9 @@ export async function POST(req: NextRequest) {
       where: {
         email,
       },
-     data: {
-      token
-     }
+      data: {
+        token,
+      },
     });
 
     const response = NextResponse.json(
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7 * 30 * 12, 
+      maxAge: 60 * 60 * 24 * 7 * 30 * 12,
     });
 
     return response;
