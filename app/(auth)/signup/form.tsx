@@ -42,7 +42,7 @@ function Form() {
           ...state,
           loading: false,
           success: true,
-          error: response.message,
+          error: '',
         });
         router.push('/dashboard');
       }
@@ -105,7 +105,7 @@ function Form() {
         variant="default"
         className="relative mt-6 w-full bg-gray-800 hover:bg-gray-900"
       >
-        {state.loading ? <Loader /> : 'Login Here'}
+        {state.loading ? <Loader /> : 'Signup Here'}
       </Button>
       <p className="my-4 text-center text-sm tracking-tight">
         Already registered?{' '}

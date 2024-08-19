@@ -1,12 +1,9 @@
 'use server';
+import { User } from '@/Types/Types';
 import jwt from 'jsonwebtoken';
 
-export const getJwtToken = async (
-  email: string,
-  secret: string,
-  time: string,
-) => {
-  return await jwt.sign({ email: email as string }, secret, {
+export const getJwtToken = async (data: User, secret: string, time: string) => {
+  return await jwt.sign({ data }, secret, {
     expiresIn: time,
     algorithm: 'HS256',
   });
@@ -20,8 +17,8 @@ export const decodeJwtToken = (token: string) => {
   return jwt.decode(token);
 };
 
-export const getToken = (email: string) => {
-  return getJwtToken(email, process.env?.TOKEN as string, '1Y');
+export const getToken = (data: User) => {
+  return getJwtToken(data, process.env?.TOKEN as string, '1Y');
 };
 
 export const verifyToken = (token: string) => {

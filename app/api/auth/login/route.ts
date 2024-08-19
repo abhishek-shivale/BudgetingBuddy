@@ -41,7 +41,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const token = await getToken(email);
+    const token = await getToken({
+      name: already.name as string,
+      isVerified: already.isVerified as boolean,
+      email: already.email,
+      id: already.id,
+    });
+
     console.log(token);
 
     await Prisma.user.update({
