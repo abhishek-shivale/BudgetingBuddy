@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - main  # Adjust this to your default branch or any branch you want to trigger the action
+      - main  
   pull_request:
     branches:
-      - main  # Adjust this as needed
+      - main  
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Specify the Node.js version you're using
+          node-version: '20'  
 
       - name: Cache pnpm store
         uses: actions/cache@v3

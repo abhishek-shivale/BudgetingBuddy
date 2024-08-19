@@ -1,3 +1,4 @@
+"use sever"
 import sgMail from '@sendgrid/mail';
 
 export async function sendMail(email: string, subject: string, token: string) {

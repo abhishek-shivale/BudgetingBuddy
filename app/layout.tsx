@@ -10,7 +10,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: 'Budgeting Buddy - Simplify Your Finances',
+  title: 'BudgetingBuddy - Simplify Your Finances',
   description:
     'Effortlessly manage your expenses, track your savings, and achieve your financial goals with Budgetting Buddy',
 };
@@ -28,7 +28,7 @@ export default function RootLayout({
         {' '}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

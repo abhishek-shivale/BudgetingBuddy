@@ -1,17 +1,24 @@
 import { Prisma } from '@/database/Prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import { getAccessToken, getRefreshToken } from '@/utils/token';
+import { getToken } from '@/utils/api/token';
+import ApiResponse from '@/utils/api/ApiResponse';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password } = body as { email: string; password: string };
+    console.log(email, password);
 
     if (!email || !password) {
       return NextResponse.json(
-        { message: 'Email and Password are required' },
-        { status: 400 },
+        new ApiResponse(
+          'Email and Password are required',
+          400,
+          null,
+          false,
+          null,
+        ),
       );
     }
 
@@ -23,8 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (already) {
       return NextResponse.json(
-        { message: 'User already exists' },
-        { status: 400 },
+        new ApiResponse('User already exists', 400, null, false, null),
       );
     }
 
@@ -38,37 +44,27 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const accessToken = getAccessToken(newUser.email);
-    const refreshToken = getRefreshToken(newUser.email);
+    const token = await getToken(newUser.email);
 
     await Prisma.user.update({
       where: {
         email,
       },
       data: {
-        refreshToken,
+        token,
       },
     });
 
     const response = NextResponse.json(
-      { message: 'User created successfully' },
-      { status: 200 },
+      new ApiResponse('User created successfully', 200, null, true, null),
     );
 
-    response.cookies.set('accessToken', accessToken, {
+    response.cookies.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 60 * 60, // 1 hour
-    });
-
-    response.cookies.set('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
+      maxAge: 60 * 60 * 24 * 7 * 30 * 12, 
     });
 
     return response;
@@ -76,8 +72,7 @@ export async function POST(req: NextRequest) {
     console.log(error);
 
     return NextResponse.json(
-      { message: 'Something went wrong' },
-      { status: 500 },
+      new ApiResponse('Internal Server Error', 500, null, false, null),
     );
   }
 }

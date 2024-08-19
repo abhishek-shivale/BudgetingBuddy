@@ -24,7 +24,7 @@ const MenuOptions = () => {
           className="flex flex-row font-semibold text-white"
           href="/dashboard"
         >
-          <BadgeDollarSign color="white" strokeWidth={1.5} size={28} />
+          <BadgeDollarSign color="white" strokeWidth={1.5} size={28}/>
         </Link>
         <TooltipProvider>
           {menuOptions.map((menuItem) => (
